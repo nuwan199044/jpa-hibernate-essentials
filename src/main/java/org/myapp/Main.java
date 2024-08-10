@@ -9,9 +9,9 @@ import javax.persistence.Persistence;
 
 public class Main {
     public static void main(String[] args) {
-        Employee e1 = new Employee(1, "Kamal");
-        Employee e2 = new Employee(2, "Sarath");
-        Employee e3 = new Employee(3, "Kosala");
+        Employee e1 = Employee.builder().id(1).name("Kamal").build();
+        Employee e2 = Employee.builder().id(2).name("Sarath").build();
+        Employee e3 = Employee.builder().id(3).name("Kosala").build();
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("employeeApp");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -21,5 +21,11 @@ public class Main {
         entityManager.persist(e2);
         entityManager.persist(e3);
         transaction.commit();
+
+        //Data Fetching
+        Employee employee1 = entityManager.find(Employee.class, 1);
+        Employee employee2 = entityManager.find(Employee.class, 2);
+        System.out.println("Employee 1 "+employee1);
+        System.out.println("Employee 2 "+employee2);
     }
 }
