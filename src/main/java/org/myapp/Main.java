@@ -16,6 +16,9 @@ public class Main {
         //Read
         fetchEmployee();
 
+        //update
+        updateEmployee();
+
     }
 
     private static EntityManager getEntityManager() {
@@ -43,6 +46,17 @@ public class Main {
         Employee employee2 = entityManager.find(Employee.class, 2);
         System.out.println("Employee 1 "+employee1);
         System.out.println("Employee 2 "+employee2);
+        entityManager.close();
+    }
+
+    private static void updateEmployee() {
+        EntityManager entityManager = getEntityManager();
+        Employee e1 = entityManager.find(Employee.class, 1);
+        EntityTransaction transaction = entityManager.getTransaction();
+        e1.setName("Nuwan");
+        transaction.begin();
+        entityManager.persist(e1);
+        transaction.commit();
         entityManager.close();
     }
 
