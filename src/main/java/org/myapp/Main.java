@@ -19,6 +19,9 @@ public class Main {
         //update
         updateEmployee();
 
+        //delete
+        deleteEmployee();
+
     }
 
     private static EntityManager getEntityManager() {
@@ -56,6 +59,16 @@ public class Main {
         e1.setName("Nuwan");
         transaction.begin();
         entityManager.persist(e1);
+        transaction.commit();
+        entityManager.close();
+    }
+
+    private static void deleteEmployee() {
+        EntityManager entityManager = getEntityManager();
+        Employee e1 = entityManager.find(Employee.class, 1);
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.remove(e1);
         transaction.commit();
         entityManager.close();
     }
