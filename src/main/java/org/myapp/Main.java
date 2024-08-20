@@ -1,11 +1,13 @@
 package org.myapp;
 
+import org.myapp.entity.AccessCard;
 import org.myapp.entity.Employee;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,13 +16,13 @@ public class Main {
         createEmployee();
 
         //Read
-        fetchEmployee();
+//        fetchEmployee();
 
         //update
-        updateEmployee();
+//        updateEmployee();
 
         //delete
-        deleteEmployee();
+//        deleteEmployee();
 
     }
 
@@ -30,15 +32,26 @@ public class Main {
     }
 
     private static void createEmployee() {
-        Employee e1 = Employee.builder().id(1).name("Kamal").build();
-        Employee e2 = Employee.builder().id(2).name("Sarath").build();
-        Employee e3 = Employee.builder().id(3).name("Kosala").build();
+        Employee e1 = Employee.builder().name("Kamal").build();
+        Employee e2 = Employee.builder().name("Sarath").build();
+        Employee e3 = Employee.builder().name("Kosala").build();
+
+        AccessCard a1 = AccessCard.builder().issueDate(new Date()).isActive(true).firmwareVersion("1.0.0").build();
+        AccessCard a2 = AccessCard.builder().issueDate(new Date()).isActive(true).firmwareVersion("1.0.1").build();
+        AccessCard a3 = AccessCard.builder().issueDate(new Date()).isActive(false).firmwareVersion("1.0.2").build();
+
+        e1.setAccessCard(a1);
+        e2.setAccessCard(a2);
+        e3.setAccessCard(a3);
+
         EntityManager entityManager = getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
+
         entityManager.persist(e1);
         entityManager.persist(e2);
         entityManager.persist(e3);
+
         transaction.commit();
         entityManager.close();
     }
